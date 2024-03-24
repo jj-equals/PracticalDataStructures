@@ -3,7 +3,7 @@
 
 <ul>
     <li>
-        <a href=''>Singly Linked List</a>
+        <a href='src/SinglyLinkedList'>Singly Linked List</a>
     </li>
     <li>
         <a href=''>Doubly Linked List</a>
