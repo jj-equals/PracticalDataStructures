@@ -1,13 +1,19 @@
 export interface IDataStructure<T> {
-    //Adds items to the end of collection
+    //Adds item to the collection end
     push(value: T): void;
 
-    //Returns index of item that has this value
-    lookupByValue(value: T): number;
+    //Adds item to the collection start
+    unshift(value: T): void;
 
     //Return value of item in requested index
-    lookupByIndex(index: number): T;
+    get(index: number): T;
+
+    //Replace item in requested index
+    set(index: number, value: T): void;
 
     //Remove last item of the collection
     pop(): void;
+
+    //Remove first item of the collection    
+    shift(): void;
 }

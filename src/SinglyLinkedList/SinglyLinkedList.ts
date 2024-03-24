@@ -1,8 +1,8 @@
 import { IDataStructure } from "../IDataStructure";
 
 export class SinglyLinkedList<T> implements IDataStructure<T> {
-    private head: Node<T> | null = null;
-    private tail: Node<T> | null = null;
+    private head: SinglyLinkedListNode<T> | null = null;
+    private tail: SinglyLinkedListNode<T> | null = null;
 
     private validateInitialization(): void {
         if (!this.head) {
@@ -11,7 +11,7 @@ export class SinglyLinkedList<T> implements IDataStructure<T> {
     }
 
     public push(value: T): void {
-        let item = new Node<T>(value);
+        let item = new SinglyLinkedListNode<T>(value);
 
         if (!this.head && !this.tail) {
             this.head = item;
@@ -23,50 +23,60 @@ export class SinglyLinkedList<T> implements IDataStructure<T> {
         this.tail! = item;
     }
 
-    public pop(): void {
-        this.validateInitialization();
+    public unshift(value: T): void {
+        let item = new SinglyLinkedListNode<T>(value);
 
-        if(this.head == this.tail){
-            this.head = null;
-            this.tail = null;
-            
+        if (!this.head && !this.tail) {
+            this.head = item;
+            this.tail = item;
             return;
         }
 
-        var previous: Node<T> = this.head!;
-        var current: Node<T> = this.head!;
+        item.next = this.head;
+        this.head = item;
+    }
 
-        while(current.next != null){
-                previous = current;
-                current = current.next;
+    public pop(): void {
+        this.validateInitialization();
+
+        if (this.head == this.tail) {
+            this.head = null;
+            this.tail = null;
+
+            return;
+        }
+
+        var previous: SinglyLinkedListNode<T> = this.head!;
+        var current: SinglyLinkedListNode<T> = this.head!;
+
+        while (current.next != null) {
+            previous = current;
+            current = current.next;
         }
 
         previous.next = null;
         this.tail = previous;
     }
 
-    public lookupByValue(value: T): number {
+    public shift(): void {
         this.validateInitialization();
 
-        var item: Node<T> = this.head!;
-        let indexCounter = 0;
+        if (this.head == this.tail) {
+            this.head = null;
+            this.tail = null;
 
-        while (true) {
-            if(item.getValue()==value){
-                return indexCounter;
-            }
-            if (!item.next) {
-                throw new Error("Couldn`t find the value.");
-            }
-            item = item.next;
-            indexCounter++;
+            return;
         }
+
+        var previous: SinglyLinkedListNode<T> = this.head!;
+        this.head = this.head!.next;
+        previous.next = null;
     }
 
-    public lookupByIndex(index: number): T {
+    public get(index: number): T {
         this.validateInitialization();
 
-        var item: Node<T> = this.head!;
+        var item: SinglyLinkedListNode<T> = this.head!;
         let indexCounter = 0;
 
         while (indexCounter != index) {
@@ -79,11 +89,48 @@ export class SinglyLinkedList<T> implements IDataStructure<T> {
 
         return item.getValue();
     }
+
+    public set(index: number, value: T): void {
+        var item = new SinglyLinkedListNode<T>(value);
+        this.validateInitialization();
+
+        //Only one node in the collection
+        if(this.head! == this.tail!){
+            this.head = item;
+            this.tail = item;
+            return;
+        }
+
+        //First node in the collection
+        if(index == 0){
+            item.next = this.head!.next;
+            this.head!.next = null;
+            this.head = item;
+            return;
+        }
+
+        // All other cases
+        var previous: SinglyLinkedListNode<T> = this.head!;
+        var current: SinglyLinkedListNode<T> = this.head!;
+        let indexCounter = 0;
+
+        while (indexCounter != index) {
+            if (!current.next) {
+                throw new Error("Index out of bound");
+            }
+            previous = current;
+            current = current.next;
+            indexCounter++;
+        }
+
+        previous.next = item;
+        item.next = current.next;
+    }
 }
 
-class Node<T> {
+class SinglyLinkedListNode<T> {
     private value: T;
-    public next: Node<T> | null = null;
+    public next: SinglyLinkedListNode<T> | null = null;
 
     constructor(value: T) {
         this.value = value;
