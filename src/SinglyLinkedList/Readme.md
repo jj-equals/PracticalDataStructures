@@ -1,7 +1,7 @@
 <h1 align='center'>Singly Linked List</h1>
 <h2 align='center'>Worst Case Time Complexity by Operation Kind</h2>
 <p align='center'>
-    <table>
+    <table align='center'>
         <thead align='center'>
             <th>Access Operations</th>
             <th>Search Operations</th>
