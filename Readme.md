@@ -6,6 +6,6 @@
         <a href='src/SinglyLinkedList'>Singly Linked List</a>
     </li>
     <li>
-        <a href=''>Doubly Linked List</a>
+        <a href='src/DoublyLinkedList'>Doubly Linked List</a>
     </li>
 </ul>
