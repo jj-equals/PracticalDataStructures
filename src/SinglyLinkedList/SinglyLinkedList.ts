@@ -1,4 +1,4 @@
-import { IDataStructure } from "../../IDataStructure";
+import { IDataStructure } from "../IDataStructure";
 
 export class SinglyLinkedList<T> implements IDataStructure<T> {
     private head: Node<T> | null = null;
