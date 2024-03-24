@@ -1,0 +1,24 @@
+{
+  "name": "practical-data-structures",
+  "version": "1.0.0",
+  "description": "Practical Data Structures",
+  "scripts": {
+      "test": "jest",
+      "build": "tsc"
+  },
+  "keywords": [
+    "algorithms",
+    "data-structures",
+    "typescript",
+    "test-driven-development"
+  ],
+  "author": "Jario Rocha dos Santos Junior",
+  "license": "MIT",
+  "dependencies": {
+    "typescript": "^5.4.3"
+  },
+  "devDependencies": {
+    "@types/jest": "^29.5.12",
+    "ts-jest": "^29.1.2"
+  }
+}
