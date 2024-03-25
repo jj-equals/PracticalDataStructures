@@ -95,14 +95,14 @@ export class SinglyLinkedList<T> implements IDataStructure<T> {
         this.validateInitialization();
 
         //Only one node in the collection
-        if(this.head! == this.tail!){
+        if (this.head! == this.tail!) {
             this.head = item;
             this.tail = item;
             return;
         }
 
         //First node in the collection
-        if(index == 0){
+        if (index == 0) {
             item.next = this.head!.next;
             this.head!.next = null;
             this.head = item;
@@ -125,6 +125,45 @@ export class SinglyLinkedList<T> implements IDataStructure<T> {
 
         previous.next = item;
         item.next = current.next;
+    }
+
+    insert(index: number, value: T): void {
+        this.validateInitialization();
+        var item = new SinglyLinkedListNode<T>(value);
+
+        if (this.head == this.tail) {
+            item.next = this.head;
+            this.head = item;
+            return;
+        }
+
+        var counter: number = 1;
+        var item: SinglyLinkedListNode<T> = new SinglyLinkedListNode<T>(value);
+        var previous: SinglyLinkedListNode<T> | null = this.head!;
+        var current: SinglyLinkedListNode<T> = this.head!.next!;
+
+        while (true) {
+            if(index == 0){
+                item.next = this.head;
+                this.head = item;
+                return;
+            }
+            
+            if (index == counter) {
+                item.next = current;
+                previous.next = item;
+                return;
+            }
+
+            if (current.next == null) {
+                throw new Error("Index out of bound")
+            }
+
+            counter++;
+            previous = current;
+            current = current.next!;
+        }
+
     }
 }
 

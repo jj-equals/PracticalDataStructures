@@ -63,6 +63,26 @@ describe('Singly Linked List: ', () => {
         });
     })
 
+    describe('Is capable of inserting items: ', () => {
+        var collection = new SinglyLinkedList<number>();
+        collection.push(5);
+        collection.push(10);
+        collection.push(15);
+        collection.push(20);
+
+        it("In the first position", () => {
+            collection.insert(0, 1);
+            expect(collection.get(0)).toBe(1);
+            expect(collection.get(4)).toBe(20);
+            expect(() => collection.get(5)).toThrow(Error);
+        })
+
+        it("In an intermediary position", () => {
+            collection.insert(3, 99);
+            expect(collection.get(3)).toBe(99);
+        })
+    })
+
     describe('Is capable of removing items: ', () => {
         it('By poping items of collection`s last position', () => {
             var collection = new SinglyLinkedList<number>();

@@ -16,4 +16,6 @@ export interface IDataStructure<T> {
 
     //Remove first item of the collection    
     shift(): void;
+
+    insert(index: number, value: T): void;
 }
