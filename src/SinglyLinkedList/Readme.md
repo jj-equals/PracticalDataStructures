@@ -44,6 +44,12 @@
             <td>Search item in specific position and replace its value</td>
             <td>O(n)</td>
         </tr>
+        <tr align='center'>
+            <td>Insert</td>
+            <td>Search/Insert</td>
+            <td>Search item in specific position and set item as its next value, reference old next as item`s next.</td>
+            <td>O(n)</td>
+        </tr>
     </table>
 </p>
 
@@ -60,3 +66,6 @@
 
 ### Set:
 > Search item in specific position and replace its value. Has a time complexty of O(n) because it has to iterate each node linearly beginning from head until the requested item and then replacing the value of requested node with O(1) time complexity. Removing non dominant operation we have O(n).
+
+### Insert:
+> Search item in specific position and then set as next of the previous one and set current position item as next. Has a time complexity of O(n) because it has to iterate each node linearly beggining from head until the requested index position.

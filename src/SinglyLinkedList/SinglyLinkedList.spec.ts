@@ -64,22 +64,39 @@ describe('Singly Linked List: ', () => {
     })
 
     describe('Is capable of inserting items: ', () => {
-        var collection = new SinglyLinkedList<number>();
-        collection.push(5);
-        collection.push(10);
-        collection.push(15);
-        collection.push(20);
-
         it("In the first position", () => {
+            var collection = new SinglyLinkedList<number>();
+            collection.push(5);
+
             collection.insert(0, 1);
             expect(collection.get(0)).toBe(1);
-            expect(collection.get(4)).toBe(20);
-            expect(() => collection.get(5)).toThrow(Error);
+            expect(collection.get(1)).toBe(5);
+            expect(() => collection.get(2)).toThrow(Error);
         })
 
         it("In an intermediary position", () => {
+            var collection = new SinglyLinkedList<number>();
+            collection.push(5);
+            collection.push(10);
+
+            collection.insert(1, 99);
+            expect(collection.get(1)).toBe(99);
+            expect(collection.get(2)).toBe(10);
+            expect(() => collection.get(3)).toThrow(Error);
+            
+        })
+
+        
+        it("In the last position", () => {
+            var collection = new SinglyLinkedList<number>();
+            collection.push(5);
+            collection.push(10);
+            collection.push(15);
+
             collection.insert(3, 99);
             expect(collection.get(3)).toBe(99);
+            expect(() => collection.get(4)).toThrow(Error);
+            
         })
     })
 

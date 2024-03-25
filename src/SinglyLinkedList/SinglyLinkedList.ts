@@ -143,20 +143,22 @@ export class SinglyLinkedList<T> implements IDataStructure<T> {
         var current: SinglyLinkedListNode<T> = this.head!.next!;
 
         while (true) {
+            //First item
             if(index == 0){
                 item.next = this.head;
                 this.head = item;
                 return;
             }
-            
+            //Intermediary position
             if (index == counter) {
                 item.next = current;
                 previous.next = item;
                 return;
             }
-
+            //Last item
             if (current.next == null) {
-                throw new Error("Index out of bound")
+                current.next = item;
+                return;
             }
 
             counter++;
