@@ -1,8 +1,30 @@
 import { IDataStructure } from "../IDataStructure";
 
+class Node<T> {
+    private value: T;
+    public next: Node<T> | null = null;
+
+    constructor(value: T) {
+        this.value = value;
+    }
+
+    public getValue(): T {
+        return this.value;
+    }
+}
 export class SinglyLinkedList<T> implements IDataStructure<T> {
-    private head: SinglyLinkedListNode<T> | null = null;
-    private tail: SinglyLinkedListNode<T> | null = null;
+
+    private head: Node<T> | null = null;
+    private tail: Node<T> | null = null;
+    private _lenght: number = 0;
+
+    public get lenght(): number {
+        return this._lenght;
+    }
+
+    private set lenght(v: number) {
+        this._lenght = v;
+    }
 
     private validateInitialization(): void {
         if (!this.head) {
@@ -10,12 +32,31 @@ export class SinglyLinkedList<T> implements IDataStructure<T> {
         }
     }
 
+    private getNode(index: number): Node<T> {
+        let counter = 0;
+        var current: Node<T> | null = this.head;
+
+        while (true) {
+            if (current == null) {
+                throw new Error("Index out of bound");
+            }
+
+            if (index == counter) {
+                return current;
+            }
+            current = current.next;
+            counter++;
+        }
+    }
+
     public push(value: T): void {
-        let item = new SinglyLinkedListNode<T>(value);
+        this.lenght++;
+        let item = new Node<T>(value);
 
         if (!this.head && !this.tail) {
             this.head = item;
             this.tail = item;
+
             return;
         }
 
@@ -24,7 +65,8 @@ export class SinglyLinkedList<T> implements IDataStructure<T> {
     }
 
     public unshift(value: T): void {
-        let item = new SinglyLinkedListNode<T>(value);
+        this.lenght++;
+        let item = new Node<T>(value);
 
         if (!this.head && !this.tail) {
             this.head = item;
@@ -46,16 +88,12 @@ export class SinglyLinkedList<T> implements IDataStructure<T> {
             return;
         }
 
-        var previous: SinglyLinkedListNode<T> = this.head!;
-        var current: SinglyLinkedListNode<T> = this.head!;
+        var newTail: Node<T> = this.getNode(this.lenght - 2);
 
-        while (current.next != null) {
-            previous = current;
-            current = current.next;
-        }
+        newTail.next = null;
+        this.tail = newTail;
 
-        previous.next = null;
-        this.tail = previous;
+        this.lenght--;
     }
 
     public shift(): void {
@@ -68,31 +106,21 @@ export class SinglyLinkedList<T> implements IDataStructure<T> {
             return;
         }
 
-        var previous: SinglyLinkedListNode<T> = this.head!;
+        var previous: Node<T> = this.getNode(0);
         this.head = this.head!.next;
         previous.next = null;
+
+        this.lenght--;
     }
 
     public get(index: number): T {
         this.validateInitialization();
-
-        var item: SinglyLinkedListNode<T> = this.head!;
-        let indexCounter = 0;
-
-        while (indexCounter != index) {
-            if (!item.next) {
-                throw new Error("Index out of bound");
-            }
-            item = item.next;
-            indexCounter++;
-        }
-
-        return item.getValue();
+        return this.getNode(index).getValue();
     }
 
     public set(index: number, value: T): void {
-        var item = new SinglyLinkedListNode<T>(value);
         this.validateInitialization();
+        var item = new Node<T>(value);
 
         //Only one node in the collection
         if (this.head! == this.tail!) {
@@ -110,74 +138,77 @@ export class SinglyLinkedList<T> implements IDataStructure<T> {
         }
 
         // All other cases
-        var previous: SinglyLinkedListNode<T> = this.head!;
-        var current: SinglyLinkedListNode<T> = this.head!;
-        let indexCounter = 0;
+        var previous: Node<T> = this.getNode(index - 1);
+        var current: Node<T> = this.getNode(index);
 
-        while (indexCounter != index) {
-            if (!current.next) {
-                throw new Error("Index out of bound");
-            }
-            previous = current;
-            current = current.next;
-            indexCounter++;
-        }
-
-        previous.next = item;
         item.next = current.next;
+        previous.next = item;
     }
 
     insert(index: number, value: T): void {
-        this.validateInitialization();
-        var item = new SinglyLinkedListNode<T>(value);
+        if (index < 0 || index > this.lenght) {
+            throw new Error("Index out of bound");
+        }
 
-        if (this.head == this.tail) {
-            item.next = this.head;
-            this.head = item;
+        //First item or Empty Collection
+        if (index == 0 || this.lenght == 0) {
+            this.unshift(value);
+            return;
+        }
+        //Last item
+        if (this.lenght == index) {
+            this.push(value);
             return;
         }
 
-        var counter: number = 1;
-        var item: SinglyLinkedListNode<T> = new SinglyLinkedListNode<T>(value);
-        var previous: SinglyLinkedListNode<T> | null = this.head!;
-        var current: SinglyLinkedListNode<T> = this.head!.next!;
+        var previous: Node<T> = this.getNode(index - 1);
+        var current: Node<T> = this.getNode(index);
 
-        while (true) {
-            //First item
-            if(index == 0){
-                item.next = this.head;
-                this.head = item;
-                return;
-            }
-            //Intermediary position
-            if (index == counter) {
-                item.next = current;
-                previous.next = item;
-                return;
-            }
-            //Last item
-            if (current.next == null) {
-                current.next = item;
-                return;
-            }
+        var item = new Node<T>(value);
+        item.next = current;
+        previous.next = item;
 
-            counter++;
-            previous = current;
-            current = current.next!;
+        this.lenght++;
+    }
+
+    public remove(index: number): void {
+        if (index < 0 || index > this.lenght) {
+            throw new Error("Index out of bound");
+        }
+        if (index == 0) {
+            this.shift();
+            return;
+        }
+        if (index == this.lenght - 1) {
+            this.pop();
+            return;
         }
 
+        var previous: Node<T> = this.getNode(index - 1);
+        var current: Node<T> = this.getNode(index);
+
+        previous.next = current.next;
+        current.next = null;
+        this.lenght--;
+    }
+
+    reverse(): void {
+        this.validateInitialization();
+
+        //Invert pointers
+        var temp: Node<T> | null = this.head;
+        this.head = this.tail;
+        this.tail = temp;
+
+        //Flip over the list
+        var next: Node<T> | null = temp;
+        var previous: Node<T> | null = null;
+        for (let i: number = 0; i < this.lenght; i++) {
+            next = temp!.next;
+            temp!.next = previous;
+            previous = temp;
+            temp = next;
+        }
     }
 }
 
-class SinglyLinkedListNode<T> {
-    private value: T;
-    public next: SinglyLinkedListNode<T> | null = null;
-
-    constructor(value: T) {
-        this.value = value;
-    }
-
-    public getValue(): T {
-        return this.value;
-    }
-}

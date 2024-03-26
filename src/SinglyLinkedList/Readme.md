@@ -50,6 +50,18 @@
             <td>Search item in specific position and set item as its next value, reference old next as item`s next.</td>
             <td>O(n)</td>
         </tr>
+        <tr align='center'>
+            <td>Remove</td>
+            <td>Search/Remove</td>
+            <td>Remove item in a specific position connection directly the two immediate neighbors.</td>
+            <td>O(n)</td>
+        </tr>
+        <tr align='center'>
+            <td>Remove</td>
+            <td>Search/Insert</td>
+            <td>Invert all items in a given collection.</td>
+            <td>O(n)</td>
+        </tr>
     </table>
 </p>
 
@@ -69,3 +81,9 @@
 
 ### Insert:
 > Search item in specific position and then set as next of the previous one and set current position item as next. Has a time complexity of O(n) because it has to iterate each node linearly beggining from head until the requested index position.
+
+### Remove:
+> Remove item in a specific position connection directly the two immediate neighbors. Has a time complexity of O(n) because it has to iterate each node linearly beggining from head until the requested index position.
+
+## Reverse:
+> Invert all items in a given collection. Has a time complexity of O(n) because it has to iterate the whole collection linearly to reorder the nodes.

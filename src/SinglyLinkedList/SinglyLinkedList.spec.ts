@@ -1,6 +1,5 @@
 import { SinglyLinkedList } from "./SinglyLinkedList";
 
-
 describe('Singly Linked List: ', () => {
     describe('Fails when trying to: ', () => {
         var collection = new SinglyLinkedList<number>();
@@ -17,6 +16,10 @@ describe('Singly Linked List: ', () => {
             expect(() => collection.shift()).toThrow(Error);
         });
 
+        it('Insert item out of the items range', () => {
+            expect(() => collection.insert(-1, 10)).toThrow(Error);
+            expect(() => collection.insert(1, 10)).toThrow(Error);
+        })
     });
 
     describe('Is capable of adding items: ', () => {
@@ -59,7 +62,7 @@ describe('Singly Linked List: ', () => {
         it("In the last position", () => {
             collection.set(3, 50);
             expect(collection.get(3)).toBe(50);
-            expect(() => collection.get(4)).toThrow(Error);
+            expect(collection.lenght).toBe(4);
         });
     })
 
@@ -67,26 +70,29 @@ describe('Singly Linked List: ', () => {
         it("In the first position", () => {
             var collection = new SinglyLinkedList<number>();
             collection.push(5);
-
             collection.insert(0, 1);
+
             expect(collection.get(0)).toBe(1);
             expect(collection.get(1)).toBe(5);
-            expect(() => collection.get(2)).toThrow(Error);
+            expect(collection.lenght).toBe(2);
         })
 
         it("In an intermediary position", () => {
             var collection = new SinglyLinkedList<number>();
+
             collection.push(5);
             collection.push(10);
+            collection.push(15);
 
             collection.insert(1, 99);
+
             expect(collection.get(1)).toBe(99);
             expect(collection.get(2)).toBe(10);
-            expect(() => collection.get(3)).toThrow(Error);
-            
+            expect(collection.lenght).toBe(4);
+
         })
 
-        
+
         it("In the last position", () => {
             var collection = new SinglyLinkedList<number>();
             collection.push(5);
@@ -95,13 +101,13 @@ describe('Singly Linked List: ', () => {
 
             collection.insert(3, 99);
             expect(collection.get(3)).toBe(99);
-            expect(() => collection.get(4)).toThrow(Error);
-            
+            expect(collection.lenght).toBe(4);
+
         })
     })
 
     describe('Is capable of removing items: ', () => {
-        it('By poping items of collection`s last position', () => {
+        it("By 'poping' items of collection`s last position", () => {
             var collection = new SinglyLinkedList<number>();
             collection.push(5);
             collection.push(10);
@@ -109,10 +115,10 @@ describe('Singly Linked List: ', () => {
             collection.push(20);
 
             collection.pop();
-            expect(() => collection.get(3)).toThrow(Error);
+            expect(collection.lenght).toBe(3);
         });
 
-        it('By shifting items on collection`s first position', () => {
+        it("By 'shifting' items on collection`s first position", () => {
             var collection = new SinglyLinkedList<number>();
             collection.unshift(5);
             collection.unshift(10);
@@ -120,8 +126,60 @@ describe('Singly Linked List: ', () => {
             collection.unshift(20);
 
             collection.shift();
-            expect(() => collection.get(3)).toThrow(Error);
+            expect(collection.get(0)).toBe(15);
+            expect(collection.lenght).toBe(3);
         });
+
+        it("By 'removing' items on collection`s first position", () => {
+            var collection = new SinglyLinkedList<number>();
+            collection.push(5);
+            collection.push(10);
+            collection.push(15);
+
+            collection.remove(0);
+            expect(collection.get(0)).toBe(10);
+            expect(collection.lenght).toBe(2);
+        });
+
+        it("By 'removing' items on collection`s last position", () => {
+            var collection = new SinglyLinkedList<number>();
+            collection.push(5);
+            collection.push(10);
+            collection.push(15);
+
+            collection.remove(2);
+            expect(collection.get(1)).toBe(10);
+            expect(collection.lenght).toBe(2);
+        });
+
+        it("By 'removing' an item on collection`s intermediary position", () => {
+            var collection = new SinglyLinkedList<number>();
+            collection.push(5);
+            collection.push(10);
+            collection.push(15);
+            collection.push(20);
+
+            collection.remove(2);
+            expect(collection.get(2)).toBe(20);
+            expect(collection.lenght).toBe(3);
+        });
+    })
+
+    describe('Is capable of Inverting the collection: ', () => {
+        it("By 'reversing' items", () => {
+            var collection = new SinglyLinkedList<number>();
+            collection.push(5);
+            collection.push(10);
+            collection.push(15);
+            collection.push(20);
+
+            collection.reverse();
+
+            expect(collection.get(0)).toBe(20);
+            expect(collection.get(1)).toBe(15);
+            expect(collection.get(2)).toBe(10);
+            expect(collection.get(3)).toBe(5);
+        })
     })
 
 });
