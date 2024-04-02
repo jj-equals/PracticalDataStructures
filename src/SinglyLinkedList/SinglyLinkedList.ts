@@ -28,7 +28,7 @@ export class SinglyLinkedList<T> implements IDataStructure<T> {
 
     private validateInitialization(): void {
         if (!this.head) {
-            throw new Error("Linked List not Initialized");
+            throw new Error("Singly Linked List not Initialized");
         }
     }
 
