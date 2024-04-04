@@ -1,4 +1,4 @@
-import { IDataStructure } from "../IDataStructure";
+import { IList } from "../IList";
 
 class Node<T> {
     private value: T;
@@ -12,7 +12,7 @@ class Node<T> {
         return this.value;
     }
 }
-export class SinglyLinkedList<T> implements IDataStructure<T> {
+export class SinglyLinkedList<T> implements IList<T> {
 
     private head: Node<T> | null = null;
     private tail: Node<T> | null = null;

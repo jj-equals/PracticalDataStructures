@@ -1,4 +1,4 @@
-export interface IDataStructure<T> {
+export interface IList<T> {
 
     //Adds item to the collection end
     push(value: T): void;
@@ -26,4 +26,6 @@ export interface IDataStructure<T> {
 
     //Reverse the order of all items in collection
     reverse():void;
+
+    get lenght(): number;
 }

@@ -1,4 +1,4 @@
-import { IDataStructure } from "../IDataStructure";
+import { IList } from "../IList";
 
 class Node<T> {
 
@@ -10,6 +10,12 @@ class Node<T> {
         return this._value;
     }
 
+    public changeValue(v: T): void {
+        if (v != this.value) {
+            this.value = v;
+        }
+    }
+
     private set value(v: T) {
         this._value = v;
     }
@@ -19,7 +25,7 @@ class Node<T> {
     }
 }
 
-export class DoublyLinkedList<T> implements IDataStructure<T> {
+export class DoublyLinkedList<T> implements IList<T> {
     private head: Node<T> | null = null;
     private tail: Node<T> | null = null;
 
@@ -63,39 +69,47 @@ export class DoublyLinkedList<T> implements IDataStructure<T> {
         this.lenght++;
     }
 
-    get(index: number): T {
+    private getNode(index: number): Node<T> {
         if (this.lenght === 0) {
             throw new Error("Doubly Linked List not Initialized");
         }
 
+        if (index < 0 || index >= this.lenght) {
+            throw new Error("Index out of bound");
+        }
+
         var ascending = index <= (this.lenght / 2);
-        var value: T;
+        var node: Node<T>;
 
         if (ascending) {
             let temp = this.head;
             for (let i: number = 0; i < this.lenght; i++) {
                 if (index == i) {
-                    value = temp!.value;
+                    node = temp!;
                     break;
                 }
                 temp = temp!.next;
             }
         } else {
             let temp = this.tail;
-            for (let i: number = this.lenght; i > 0; i--) {
+            for (let i: number = this.lenght - 1; i > 0; i--) {
                 if (index == i) {
-                    value = temp!.value;
+                    node = temp!;
                     break;
                 }
                 temp = temp!.previous;
             }
         }
 
-        return value!;
+        return node!;
+    }
+
+    get(index: number): T {
+        return this.getNode(index).value;
     }
 
     set(index: number, value: T): void {
-        throw new Error("Method not implemented.");
+        this.getNode(index).changeValue(value);
     }
 
     pop(): void {
@@ -117,16 +131,89 @@ export class DoublyLinkedList<T> implements IDataStructure<T> {
     }
 
     shift(): void {
-        throw new Error("Method not implemented.");
+        if (this.lenght === 0) {
+            throw new Error("Doubly Linked List not Initialized");
+        }
+        if (this.lenght === 1) {
+            this.head = null;
+            this.tail = null;
+        } else {
+            let temp = this.head!.next;
+            temp!.previous = null;
+            this.head = temp;
+        }
+        this.lenght--;
     }
+
     insert(index: number, value: T): void {
-        throw new Error("Method not implemented.");
+        if (this.lenght === 0) {
+            throw new Error("Doubly Linked List not Initialized");
+        }
+        if (index < 0 || index > this.lenght) {
+            throw new Error("Index out of bound");
+        }
+        if (index === 0) {
+            this.unshift(value);
+            return;
+        }
+        if (index === this.lenght) {
+            this.push(value);
+            return;
+        }
+
+        let current = new Node(value);
+        let before = this.getNode(index - 1);
+        let after = before.next;
+
+        current.next = after;
+        current.previous = before;
+        before.next = current;
+        after!.previous = current;
+
+        this.lenght++;
     }
+
     remove(index: number): void {
-        throw new Error("Method not implemented.");
+        if (this.lenght === 0) {
+            throw new Error("Doubly Linked List not Initialized");
+        }
+        if (index < 0 || index >= this.lenght) {
+            throw new Error("Index out of bound");
+        }
+        if (index === 0) {
+            this.shift();
+            return;
+        }
+        if (index === this.lenght - 1) {
+            this.pop();
+            return;
+        }
+
+        let current = this.getNode(index);
+        let before = current!.previous;
+        let after = current!.next;
+
+        before!.next = after;
+        current.next = null;
+        current.previous = null;
+        this.lenght--;
     }
+
     reverse(): void {
-        throw new Error("Method not implemented.");
+        if(this.lenght !== 0 && this.lenght !== 1){   
+
+            let item = new Node(this.tail!.value);
+            this.head = item;
+            let temp = this.tail!.previous;
+
+            while(temp != null){
+                item.next = new Node(temp!.value);
+                item.next.previous = item;
+                item = item.next;
+                temp = temp!.previous;
+            }
+            this.tail = item;
+        }
     }
 
 }

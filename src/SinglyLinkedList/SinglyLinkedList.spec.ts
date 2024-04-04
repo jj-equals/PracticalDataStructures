@@ -1,3 +1,4 @@
+import { IList } from "../IList";
 import { SinglyLinkedList } from "./SinglyLinkedList";
 
 describe('Singly Linked List: ', () => {
@@ -33,7 +34,7 @@ describe('Singly Linked List: ', () => {
         })
 
         it("By unshifting items to collection's first position", () => {
-            var collection = new SinglyLinkedList<number>();
+            var collection: IList<number> = new SinglyLinkedList<number>();
             collection.unshift(5);
             collection.unshift(10);
 
@@ -68,7 +69,7 @@ describe('Singly Linked List: ', () => {
 
     describe('Is capable of inserting items: ', () => {
         it("In the first position", () => {
-            var collection = new SinglyLinkedList<number>();
+            var collection: IList<number> = new SinglyLinkedList<number>();
             collection.push(5);
             collection.insert(0, 1);
 
@@ -78,7 +79,7 @@ describe('Singly Linked List: ', () => {
         })
 
         it("In an intermediary position", () => {
-            var collection = new SinglyLinkedList<number>();
+            var collection: IList<number> = new SinglyLinkedList<number>();
 
             collection.push(5);
             collection.push(10);
@@ -94,7 +95,7 @@ describe('Singly Linked List: ', () => {
 
 
         it("In the last position", () => {
-            var collection = new SinglyLinkedList<number>();
+            var collection: IList<number> = new SinglyLinkedList<number>();
             collection.push(5);
             collection.push(10);
             collection.push(15);
@@ -108,7 +109,7 @@ describe('Singly Linked List: ', () => {
 
     describe('Is capable of removing items: ', () => {
         it("By 'poping' items of collection`s last position", () => {
-            var collection = new SinglyLinkedList<number>();
+            var collection: IList<number> = new SinglyLinkedList<number>();
             collection.push(5);
             collection.push(10);
             collection.push(15);
@@ -142,7 +143,7 @@ describe('Singly Linked List: ', () => {
         });
 
         it("By 'removing' items on collection`s last position", () => {
-            var collection = new SinglyLinkedList<number>();
+            var collection: IList<number> = new SinglyLinkedList<number>();
             collection.push(5);
             collection.push(10);
             collection.push(15);
@@ -153,7 +154,7 @@ describe('Singly Linked List: ', () => {
         });
 
         it("By 'removing' an item on collection`s intermediary position", () => {
-            var collection = new SinglyLinkedList<number>();
+            var collection: IList<number> = new SinglyLinkedList<number>();
             collection.push(5);
             collection.push(10);
             collection.push(15);
@@ -167,7 +168,7 @@ describe('Singly Linked List: ', () => {
 
     describe('Is capable of Inverting the collection: ', () => {
         it("By 'reversing' items", () => {
-            var collection = new SinglyLinkedList<number>();
+            var collection: IList<number> = new SinglyLinkedList<number>();
             collection.push(5);
             collection.push(10);
             collection.push(15);
@@ -181,5 +182,4 @@ describe('Singly Linked List: ', () => {
             expect(collection.get(3)).toBe(5);
         })
     })
-
 });

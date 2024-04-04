@@ -1,6 +1,7 @@
+import { IList } from "../IList";
 import { DoublyLinkedList } from "./DoublyLinkedList";
 
-describe('Singly Linked List: ', () => {
+describe('Doubly Linked List: ', () => {
     describe('Fails when trying to: ', () => {
         var collection = new DoublyLinkedList<number>();
 
@@ -22,6 +23,30 @@ describe('Singly Linked List: ', () => {
         })
     })
 
+    describe('Is capable of replacing items: ', () => {
+        var collection: IList<number> = new DoublyLinkedList<number>();
+        collection.push(5);
+        collection.push(10);
+        collection.push(15);
+        collection.push(20);
+
+        it("In the first position", () => {
+            collection.set(0, 1);
+            expect(collection.get(0)).toBe(1);
+        });
+
+        it("In an intermediary position", () => {
+            collection.set(2, 12);
+            expect(collection.get(2)).toBe(12);
+        });
+
+        it("In the last position", () => {
+            collection.set(3, 50);
+            expect(collection.get(3)).toBe(50);
+            expect(collection.lenght).toBe(4);
+        });
+    })
+
     describe('Is capable of adding items: ', () => {
         it("By pushing items to collection's last position", () => {
             var collection = new DoublyLinkedList<number>();
@@ -39,6 +64,60 @@ describe('Singly Linked List: ', () => {
             expect(collection.get(1)).toBe(5);
         })
     });
+
+    describe('Is capable of inserting items: ', () => {
+        it("In the first position", () => {
+            var collection = new DoublyLinkedList<number>();
+            collection.push(5);
+            collection.insert(0, 1);
+
+            expect(collection.get(0)).toBe(1);
+            expect(collection.get(1)).toBe(5);
+            expect(collection.lenght).toBe(2);
+        })
+
+        it("In a fist half intermediary position", () => {
+            var collection = new DoublyLinkedList<number>();
+
+            collection.push(5);
+            collection.push(10);
+            collection.push(15);
+
+            collection.insert(1, 99);
+
+            expect(collection.get(1)).toBe(99);
+            expect(collection.get(2)).toBe(10);
+            expect(collection.lenght).toBe(4);
+        })
+
+        it("In a last half intermediary position", () => {
+            var collection = new DoublyLinkedList<number>();
+
+            collection.push(5);
+            collection.push(10);
+            collection.push(15);
+            collection.push(20);
+
+            collection.insert(3, 99);
+
+            expect(collection.get(3)).toBe(99);
+            expect(collection.get(4)).toBe(20);
+            expect(collection.lenght).toBe(5);
+        })
+
+
+        it("In the last position", () => {
+            var collection = new DoublyLinkedList<number>();
+            collection.push(5);
+            collection.push(10);
+            collection.push(15);
+
+            collection.insert(3, 99);
+            expect(collection.get(3)).toBe(99);
+            expect(collection.lenght).toBe(4);
+
+        })
+    })
 
     describe('Is capable of removing items: ', () => {
         it("By 'poping' items of collection`s last position", () => {
@@ -86,4 +165,21 @@ describe('Singly Linked List: ', () => {
             expect(collection.lenght).toBe(2);
         });
     });
+
+    describe('Is capable of Inverting the collection: ', () => {
+        it("By 'reversing' items", () => {
+            var collection: IList<number> = new DoublyLinkedList<number>();
+            collection.push(5);
+            collection.push(10);
+            collection.push(15);
+            collection.push(20);
+
+            collection.reverse();
+
+            expect(collection.get(0)).toBe(20);
+            expect(collection.get(1)).toBe(15);
+            expect(collection.get(2)).toBe(10);
+            expect(collection.get(3)).toBe(5);
+        })
+    })
 });
