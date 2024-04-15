@@ -1,21 +1,83 @@
 <h1 align='center'>Doubly Linked List</h1>
-<h2 align='center'>Worst Case Time Complexity by Operation Kind</h2>
+<h2 align='center'>Worst Case Time Complexity by Operation</h2>
 <p align='center'>
-    <table>
-        <thead align='center'>
-            <th>Access Operations</th>
-            <th>Search Operations</th>
-            <th>Insertion Operations</th>
-            <th>Deletion Operations</th>
-        </thead>
-        <tbody align='center'>
-            <td>O(n)</td>
-            <td>O(n)</td>
+    <table align='center'>
+        <tr align='center'>
+            <th>Operation Name</th>
+            <th>Operation Type</th>
+            <th>Description</th>
+            <th>Worst Time Complexity</th>
+        </tr>
+        <tr align='center'>
+            <td>Push</td>
+            <td>Insertion</td>
+            <td>Adds item to the collection end</td>
             <td>O(1)</td>
-            <td>O(1)/O(n)</td>
-        </tbody>
+        </tr>
+        <tr align='center'>
+            <td>Unshift</td>
+            <td>Insertion</td>
+            <td>Adds item to the collection start</td>
+            <td>O(1)</td>
+        </tr>
+        <tr align='center'>
+            <td>Pop</td>
+            <td>Deletion</td>
+            <td>Adds item to the collection end</td>
+            <td>O(1)</td>
+        </tr>
+        <tr align='center'>
+            <td>Shift</td>
+            <td>Deletion</td>
+            <td>Adds item to the collection start</td>
+            <td>O(1)</td>
+        </tr>
+        <tr align='center'>
+            <td>Get</td>
+            <td>Search</td>
+            <td>Search item in the collection by index</td>
+            <td>O(n)</td>
+        </tr>
+        <tr align='center'>
+            <td>Set</td>
+            <td>Search/Insert</td>
+            <td>Search item in specific position and replace its value</td>
+            <td>O(n)</td>
+        </tr>
+        <tr align='center'>
+            <td>Insert</td>
+            <td>Search/Insert</td>
+            <td>Search item in specific position and set item as its next value, reference old next as item`s next.</td>
+            <td>O(n)</td>
+        </tr>
+        <tr align='center'>
+            <td>Remove</td>
+            <td>Search/Remove</td>
+            <td>Remove item in a specific position connection directly the two immediate neighbors.</td>
+            <td>O(n)</td>
+        </tr>
     </table>
 </p>
 
 ## Operations Complexity Description
 
+### Push:
+> It has a time complexity of O(1) because it doesn`t need to iterate trought the links.
+
+### Pop:
+> Has a time complexty of O(1) because it can access the last item directly in order to remove the link and move the 'tail' pointer to the previous link.
+
+### Get:
+> Search items either by their indexes, returning their value. Has a time complexty of O(n/2) because it has to iterate each node linearly until the requested item. It can begin by head or tail wether the requested position is closer from one or other.
+
+### Set:
+> Search item in specific position and replace its value. Has a time complexty of O(n/2) because it has to iterate the list the same way as 'Get' method, until the requested item and then replacing the value of requested node with O(1) time complexity. Removing non dominant operation we have O(n/2).
+
+### Insert:
+> Search item in specific position and then set as next of the previous one and set current position item as next. Has a time complexity of O(n/2) because it has to iterate each node the same way as in 'Get' method.
+
+### Remove:
+> Remove item in a specific position connection directly the two immediate neighbors. Has a time complexity of O(n) because it has to iterate each node linearly the same way as in 'Get' method.
+
+## Reverse:
+> Invert all items in a given collection. Has a time complexity of O(n) because it has to iterate the whole collection linearly to reorder the nodes.

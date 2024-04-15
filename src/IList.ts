@@ -1,4 +1,5 @@
-export interface IDataStructure<T> {
+export interface IList<T> {
+
     //Adds item to the collection end
     push(value: T): void;
 
@@ -17,5 +18,14 @@ export interface IDataStructure<T> {
     //Remove first item of the collection    
     shift(): void;
 
+    //Insert item on a valid position of the collection keeping all the older ones
     insert(index: number, value: T): void;
+
+    //Remove item from a valid position of the collection keeping all the other ones
+    remove(index: number): void;
+
+    //Reverse the order of all items in collection
+    reverse():void;
+
+    get lenght(): number;
 }
